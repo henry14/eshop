@@ -6,6 +6,11 @@
 
 {% block content %}
    <div class="container-fluid">
+	{% if user.is_authenticated %}
+	<button class="btn btn-info">
+	    <a href="{% url "charts:chart" %}" alt="..." style="color: #ffffff">Show charts</a>
+	</button>
+	{% endif %}
 	<div class="row" style="margin-top: 6%">
 
 	    <div class="col-sm-8 blog-main">
@@ -31,7 +36,7 @@
 		</div>
 
 	    </div>
-
+		
 	    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 		<div class="sidebar-module">
 		    <h4>Categories</h4>
