@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
 from paypal.standard.forms import PayPalPaymentsForm
 from decimal import Decimal
+import uuid
 
 def order_create(request):
 	cart = Cart(request)
@@ -19,7 +21,14 @@ def order_create(request):
 				    quantity=item['quantity']
 				)
 			cart.clear()
-		return render(request, 'orders/created.html', {'order': order})
+			
+			#order_created.delay(order.id)
+			
+			request.session['order_id'] = order.id
+			
+			return redirect(reverse('payment:process'))
+			
+			#return render(request, 'orders/created.html', {'order': order})
 	else:
 		form = OrderCreateForm()
 	return render(request, 'orders/create.html', {'form': form})
@@ -28,8 +37,8 @@ def order_create(request):
 def view_that_asks_for_money(request):
 	cart = Cart(request)
 	paypal_dict = {
-	    "business": "henrytebs@gmail.com",
-	    "invoice": "",
+	    "business": "henrytebs@inceptionz.com",
+	    "invoice": str(uuid.uuid1()),
 	    "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
 	    "return": request.build_absolute_uri(reverse('estore/list.html')),
 	    "cancel_return": request.build_absolute_uri(reverse('/')),
@@ -43,5 +52,5 @@ def view_that_asks_for_money(request):
 
 	form = PayPalPaymentsForm(initial=paypal_dict)
 	context = {"form": form}
-	return render(request, "paymrnt.html", context)
+	return render(request, "payment.html", context)
 

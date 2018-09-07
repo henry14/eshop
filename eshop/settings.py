@@ -25,7 +25,11 @@ SECRET_KEY = 'sc2u(c_g0t^l^n1e$nzzfqk!g+3c9cm%&gf58%!fwkc!4d&q!^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'a0a341a8.ngrok.io',
+]
+
 
 
 # Application definition
@@ -36,6 +40,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'charts.apps.ChartsConfig',
     'paypal.standard.ipn',
+    'payment.apps.PaymentConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,6 +133,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'products/')
 
-CART_SESSION_ID='cart'
+CART_SESSION_ID = 'cart'
 
+PAYPAL_RECEIVER_EMAIL = 'henrytebs@inceptionz.com'
 PAYPAL_TEST = True
