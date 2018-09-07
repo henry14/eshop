@@ -22,7 +22,3 @@ When satisified, the user enters their personal and credit card details, places 
 If interested in paying cash through the bank, user enters their personal details, the order is submitted and an invoice.
 generated. System is then notified when payment to the invoice has been made.
 
-NB: The bank payment option has not been implemented because the system has no way of getting notifications from the bank
-The best option is by creating a shell script aimed at polling for state changes, then write webhooks for to the bank api. 
-
-Would gladly demo a product from my works using Viamo API to clearly drive the point home.
